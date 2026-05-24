@@ -14,52 +14,46 @@ export default function AuthProvider({
   const {
     setAuth,
     logout,
-    setLoading,
+    setHydrated,
   } = useAuthStore();
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        const token =
-          localStorage.getItem(
-            'accessToken',
-          );
+    const initializeAuth =
+      async () => {
+        try {
+          const token =
+            localStorage.getItem(
+              'accessToken',
+            );
 
-        // no token
-        if (!token) {
-          setLoading(false);
+          if (!token) {
+            setHydrated(true);
 
-          return;
+            return;
+          }
+
+          const user =
+            await authService.getMe();
+
+          setAuth({
+            user,
+            accessToken: token,
+          });
+        } catch (error) {
+          console.error(error);
+
+          logout();
+        } finally {
+          setHydrated(true);
         }
-
-        // fetch current user
-        const user =
-          await authService.getMe();
-
-        console.log(
-          'CURRENT USER:',
-          user,
-        );
-
-        // restore session
-        setAuth({
-          user,
-          accessToken: token,
-        });
-      } catch (error) {
-        console.error(
-          'AUTH ERROR:',
-          error,
-        );
-
-        logout();
-      } finally {
-        setLoading(false);
-      }
-    };
+      };
 
     initializeAuth();
-  }, [logout, setAuth, setLoading]);
+  }, [
+    logout,
+    setAuth,
+    setHydrated,
+  ]);
 
   return <>{children}</>;
 }

@@ -16,11 +16,11 @@ export default function ProtectedAdminLayout({
   const {
     user,
     isAuthenticated,
-    loading,
+    hydrated,
   } = useAuthStore();
 
   useEffect(() => {
-    if (loading) return;
+    if (!hydrated) return;
 
     // not logged in
     if (!isAuthenticated) {
@@ -41,12 +41,12 @@ export default function ProtectedAdminLayout({
   }, [
     user,
     isAuthenticated,
-    loading,
+    hydrated,
     router,
   ]);
 
   // wait for hydration
-  if (loading) {
+  if (!hydrated) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-black text-white">
         Loading...

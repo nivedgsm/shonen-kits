@@ -15,51 +15,73 @@ type AuthStore = {
 
   loading: boolean;
 
+  hydrated: boolean;
+
   setAuth: (data: {
     user: User;
     accessToken: string;
   }) => void;
 
-  setLoading: (loading: boolean) => void;
+  setLoading: (
+    loading: boolean,
+  ) => void;
+
+  setHydrated: (
+    hydrated: boolean,
+  ) => void;
 
   logout: () => void;
 };
 
-export const useAuthStore = create<AuthStore>((set) => ({
-  user: null,
+export const useAuthStore =
+  create<AuthStore>((set) => ({
+    user: null,
 
-  accessToken: null,
+    accessToken: null,
 
-  isAuthenticated: false,
+    isAuthenticated: false,
 
-  loading: true,
+    loading: false,
 
-  setAuth: ({ user, accessToken }) => {
-    localStorage.setItem(
-      'accessToken',
-      accessToken,
-    );
+    hydrated: false,
 
-    set({
+    setAuth: ({
       user,
       accessToken,
-      isAuthenticated: true,
-      loading: false,
-    });
-  },
+    }) => {
+      localStorage.setItem(
+        'accessToken',
+        accessToken,
+      );
 
-  setLoading: (loading) => {
-    set({ loading });
-  },
+      set({
+        user,
+        accessToken,
+        isAuthenticated: true,
+        loading: false,
+        hydrated: true,
+      });
+    },
 
-  logout: () => {
-    localStorage.removeItem('accessToken');
+    setLoading: (loading) => {
+      set({ loading });
+    },
 
-    set({
-      user: null,
-      accessToken: null,
-      isAuthenticated: false,
-      loading: false,
-    });
-  },
-}));
+    setHydrated: (hydrated) => {
+      set({ hydrated });
+    },
+
+    logout: () => {
+      localStorage.removeItem(
+        'accessToken',
+      );
+
+      set({
+        user: null,
+        accessToken: null,
+        isAuthenticated: false,
+        loading: false,
+        hydrated: true,
+      });
+    },
+  }));
