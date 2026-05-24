@@ -1,27 +1,35 @@
+import GlowCard from "@/components/shared/GlowCard";
+
+import Container from "@/components/ui/Container";
+import SectionHeading from "@/components/ui/SectionHeading";
+
 export default function AboutSection() {
   return (
-    <section id="about" className="mx-auto max-w-6xl px-6 pb-24">
-      <div className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-300">
-          About The Brand
-        </p>
+    <section
+      id="about"
+      className="py-20 md:py-28"
+    >
+      <Container>
+        <GlowCard className="mx-auto max-w-4xl p-8 md:p-12">
+          <div className="text-center">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.3em] text-blue-300">
+              About The Brand
+            </p>
 
-        <h2 className="mt-3 text-3xl font-black md:text-5xl">
-          Built for Anime x Football Fans
-        </h2>
+            <SectionHeading
+              title="Built for Anime x Football Fans"
+              subtitle="Shonen Kits is a concept ecommerce brand creating anime-inspired football fanwear for supporters who live between stadium chants, national pride, and anime-style storytelling."
+              align="center"
+            />
 
-        <p className="mt-5 leading-7 text-slate-300">
-          Shonen Kits is a concept ecommerce brand creating anime-inspired
-          football fanwear. Our products are designed for fans who enjoy both
-          national team football culture and anime-style storytelling.
-        </p>
-
-        <p className="mt-4 leading-7 text-slate-400">
-          This preview store currently uses dummy products for business and
-          payment gateway verification. Final products, checkout, and order
-          fulfillment will be added after approval.
-        </p>
-      </div>
+            <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-slate-400 md:text-base">
+              This preview store currently uses mock products for business and
+              Razorpay verification purposes. Final products, checkout systems,
+              and order fulfillment flows will be added after approval.
+            </p>
+          </div>
+        </GlowCard>
+      </Container>
     </section>
   );
 }

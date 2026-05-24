@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import CartProvider from "@/components/cart/CartProvider";
-import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
+import CartDrawer from "@/components/cart/CartDrawer";
 
 export const metadata: Metadata = {
   title: "Shonen Kits | Anime Inspired Football Jerseys",
@@ -35,6 +36,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen bg-[#050816] text-white antialiased">
         <CartProvider>
+          <CartDrawer />
           <Navbar />
           {children}
           <Footer />

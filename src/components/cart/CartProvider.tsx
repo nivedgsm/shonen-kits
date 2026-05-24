@@ -29,6 +29,9 @@ type CartContextValue = {
   items: CartItem[];
   totalItems: number;
   subtotal: number;
+  isCartOpen: boolean;
+  openCart: () => void;
+  closeCart: () => void;
   addItem: (item: AddToCartInput) => void;
   removeItem: (productId: string, size: string) => void;
   increaseQuantity: (productId: string, size: string) => void;
@@ -51,6 +54,7 @@ export default function CartProvider({
 }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
@@ -76,7 +80,17 @@ export default function CartProvider({
     window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
   }, [items, hasMounted]);
 
+  function openCart() {
+    setIsCartOpen(true);
+  }
+
+  function closeCart() {
+    setIsCartOpen(false);
+  }
+
   function addItem(item: AddToCartInput) {
+    openCart();
+
     setItems((currentItems) => {
       const existingItem = currentItems.find(
         (cartItem) =>
@@ -174,6 +188,9 @@ export default function CartProvider({
     items,
     totalItems,
     subtotal,
+    isCartOpen,
+    openCart,
+    closeCart,
     addItem,
     removeItem,
     increaseQuantity,
